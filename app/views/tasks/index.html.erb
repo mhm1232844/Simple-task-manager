@@ -20,14 +20,22 @@
         </p>
         <div class="task-actions">
           <%# Links/buttons for Edit, Toggle, Delete will go here %>
+          <%# Link to edit page (implement later) %>
+          <%# <%= link_to "Edit", edit_task_path(task) %> %>
+
+          <%# Button to toggle status (PATCH request) %>
+          <%= button_to "Toggle Status", toggle_complete_task_path(task), method: :patch %>
+
+          <%# Button to delete (implement later) %>
+          <%# <%= button_to "Delete", task, method: :delete, data: { turbo_confirm: 'Are you sure?' } %> %>
         </div>
         <hr>
-      </div>
-    <% end %>
+      </div> <%# End of task-item div %>
+    <% end %> <%# End of @tasks.each loop %>
   <% else %>
     <p>No tasks yet!</p>
-  <% end %>
-</div>
+  <% end %> <%# End of if @tasks.any? %>
+</div> <%# End of tasks container div %>
 
 <%# Basic styling for task items %>
 <style>
@@ -36,5 +44,6 @@
   .task-item.incomplete { border-left-color: orange; }
   .task-item.completed strong { text-decoration: line-through; }
   .task-actions { margin-top: 0.5em; }
+  .task-actions form { display: inline; margin-right: 5px;} /* Style button_to forms */
   .button-new-task { display: inline-block; margin-bottom: 1em; padding: 0.5em 1em; background-color: #007bff; color: white; text-decoration: none; border-radius: 4px; }
 </style>

@@ -60,3 +60,38 @@
 # Heading of the new task form
     And I should not see "Task was successfully created."
  # No success flash
+
+
+# features/manage_tasks.feature
+# ... (keep previous scenarios) ...
+
+  Scenario: Marking an incomplete task as complete
+    Given a task exists with title "Task to Complete" and completed status "false"
+    When I am on the tasks page 
+# Ensure we start from the list
+    And I find the task "Task to Complete" and click "Toggle Status"
+ # Using button text
+    Then I should see "Task status updated."
+ # Flash notice
+    And I should be on the tasks page
+ # Still on the list page
+    And I should see "Status: Complete" within the "Task to Complete" task item
+    And the "Task to Complete" task item should have class "completed"
+
+  Scenario: Marking a completed task as incomplete
+    Given a task exists with title "Task to Uncomplete" and completed status "true"
+    When I am on the tasks page
+    And I find the task "Task to Uncomplete" and click "Toggle Status"
+    Then I should see "Task status updated."
+    And I should be on the tasks page
+    And I should see "Status: Incomplete" within the "Task to Uncomplete" task item
+    And the "Task to Uncomplete" task item should not have class "completed"
+
+
+
+
+
+
+
+
+

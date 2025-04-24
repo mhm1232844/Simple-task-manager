@@ -36,6 +36,49 @@ end
       end
     end
 
+# spec/requests/tasks_spec.rb
+# ... (describe POST /tasks) ...
+
+  describe "PATCH /tasks/:id/toggle_complete" do
+    let(:task) { create(:task, completed: false) } # Start with an incomplete task
+
+    it "updates the task's completed status from false to true" do
+      patch toggle_complete_task_path(task)
+      task.reload
+      expect(task.completed).to be true
+    end
+
+     it "updates the task's completed status from true to false" do
+      task.update!(completed: true)
+      patch toggle_complete_task_path(task)
+      task.reload
+      expect(task.completed).to be false
+    end
+
+    it "redirects to the tasks list with a notice" do
+      patch toggle_complete_task_path(task)
+      expect(response).to redirect_to(tasks_path)
+      expect(flash[:notice]).to eq("Task status updated.")
+    end
+
+      it "handles non-existent tasks gracefully by redirecting" do # Updated description slightly
+      patch toggle_complete_task_path(id: task.id + 999) # Non-existent ID
+
+      # Expect a redirect to the tasks index page
+      expect(response).to redirect_to(tasks_path)
+
+      # Optionally, also check for the flash alert message
+      expect(flash[:alert]).to eq("Task not found.")
+    end
+  end
+# ... (other describes) ...
+
+
+
+
+
+
+
     context "with invalid parameters" do
       # Use attributes_for but override title to be invalid (nil)
       let(:invalid_attributes) { attributes_for(:task, title: nil) }

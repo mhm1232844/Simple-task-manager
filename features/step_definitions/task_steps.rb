@@ -91,3 +91,26 @@ Then("I should see {string} error message") do |error_message|
    expect(page).to have_content(error_message)
 end
 
+# features/step_definitions/task_steps.rb
+# ... (keep previous steps) ...
+
+Given("a task exists with title {string} and completed status {string}") do |title, completed_status|
+  FactoryBot.create(:task, title: title, completed: (completed_status == 'true'))
+end
+
+# Step to find task by title within its item and click something
+When("I find the task {string} and click {string}") do |task_title, link_or_button_text|
+  # Scope the click action within the specific task's div
+  task_div = find('.task-item', text: /#{Regexp.escape(task_title)}/)
+  within(task_div) do
+    click_on link_or_button_text
+  end
+end
+
+
+
+
+
+
+
+

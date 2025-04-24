@@ -1,24 +1,45 @@
 # app/controllers/tasks_controller.rb
 class TasksController < ApplicationController
-  # Use a before_action later to find a task for show, edit, update, destroy, toggle
-  # before_action :set_task, only: [:show, :edit, :update, :destroy, :toggle_complete]
 
   # GET /tasks
+  # GET /tasks.json
   def index
-    # Use the scope defined in the model
-    @tasks = Task.ordered_by_creation_desc
+    @tasks = Task.all
   end
 
-  # --- Define other actions later ---
+  # GET /tasks/new
+  def new
+    @task = Task.new
+  end
 
-  # private
-  #   # Common code to find a task by ID
-  #   def set_task
-  #     @task = Task.find(params[:id])
-  #   end
+  # POST /tasks
+  # POST /tasks.json
+  def create
+    @task = Task.new(task_params)
 
-  #   # Strong parameters for security
-  #   def task_params
-  #     params.require(:task).permit(:title, :description, :due_date, :completed)
-  #   end
-end
+    if @task.save
+      # Redirect to the index page on success
+      redirect_to tasks_url, notice: "Task was successfully created."
+    else
+      # Re-render the 'new' form with errors and correct status code
+      render :new, status: :unprocessable_entity
+    end
+  end
+
+  # --- Add other actions (show, edit, update, destroy) later ---
+
+  private # <--- Only ONE private section needed
+
+    # Use callbacks to share common setup or constraints between actions.
+    # Example (uncomment when needed):
+    # def set_task
+    #   @task = Task.find(params[:id])
+    # end
+
+    # Only allow a list of trusted parameters through.
+    def task_params
+      params.require(:task).permit(:title, :description, :due_date)
+      # Note: We don't permit :completed on create, it defaults to false
+    end
+
+end # <--- This is now the correct final 'end' for the class

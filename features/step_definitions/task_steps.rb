@@ -55,3 +55,39 @@ Then("the {string} task item should not have class {string}") do |task_title, cs
    task_div = find('.task-item', text: /#{Regexp.escape(task_title)}/)
    expect(task_div[:class]).not_to include(css_class)
 end
+
+
+# features/step_definitions/task_steps.rb
+# ... (keep previous steps) ...
+
+When("I click {string}") do |link_or_button_text|
+  click_on link_or_button_text
+end
+
+When("I fill in {string} with {string}") do |field_label, value|
+  # Capybara's fill_in works with label text, id, or name
+  fill_in field_label, with: value
+end
+
+Then("I should be on the tasks page") do
+  expect(current_path).to eq(tasks_path)
+end
+
+Then("I should be on the new task page") do
+  # Check for a unique element on the new task page, like the H1 title or form ID
+  expect(page).to have_selector("h1", text: "New task")
+  # Or check the URL path (less reliable if POST fails and renders :new on /tasks)
+  # expect(current_path).to eq(new_task_path)
+end
+
+# Can refine the check for form re-render vs redirect
+Then("I should see {string} error message") do |error_message|
+   # Assuming Rails renders errors in a standard way, adjust selector if needed
+   error_div = find('#error_explanation') # Standard Rails error div ID
+   within(error_div) do
+     expect(page).to have_content(error_message)
+   end
+   # Or a simpler check if the structure is consistent
+   expect(page).to have_content(error_message)
+end
+

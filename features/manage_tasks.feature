@@ -9,7 +9,8 @@
 
       Scenario: Viewing the list of tasks when none exist
         Then I should see "Tasks"
-        And I should see "New task" # Link to create new tasks
+        And I should see "New task"
+ # Link to create new tasks
         # Check specifically within the tasks container for absence of task items
         And I should not see ".task-item" within "#tasks"
 
@@ -27,3 +28,35 @@
         And the "Finish Report" task item should have class "completed"
 
       # --- Add other scenarios for Add/Edit/Delete later ---
+
+# features/manage_tasks.feature
+# ... (keep previous feature/background/scenarios) ...
+
+  Scenario: Adding a valid new task
+    When I click "New task"
+    Then I should be on the new task page
+ # Check we landed on the form page
+    When I fill in "Title" with "Schedule meeting"
+    And I fill in "Description" with "Meeting with the team about Q1 goals"
+    And I fill in "Due date" with "2024-11-30"
+    And I click "Create Task"
+ # Button text from the form
+    Then I should be on the tasks page
+    And I should see "Task was successfully created." 
+# Flash notice
+    And I should see "Schedule meeting"
+    And I should see "Meeting with the team about Q1 goals"
+    And I should see "Status: Incomplete" within the "Schedule meeting" task item
+
+  Scenario: Adding an invalid task (missing title)
+    When I click "New task"
+    Then I should be on the new task page
+    When I fill in "Description" with "This task is missing a title"
+    And I click "Create Task"
+    Then I should see "Title can't be blank" 
+# Validation error message
+    # Check that we are still on the form page (re-rendered)
+    And I should see "New task" 
+# Heading of the new task form
+    And I should not see "Task was successfully created."
+ # No success flash

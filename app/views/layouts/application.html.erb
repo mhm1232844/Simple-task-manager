@@ -1,23 +1,32 @@
+<!-- app/views/layouts/application.html.erb -->
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Simple Task Manager" %></title>
+    <title>SimpleTaskManager</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="apple-mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
-    <%= yield :head %>
-
-    <link rel="manifest" href="/manifest.json">
-    <link rel="icon" href="/icon.png" type="image/png">
-    <link rel="icon" href="/icon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/icon.png">
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
   <body>
+    <%# Standard Rails flash message display %>
+    <% flash.each do |type, msg| %>
+      <%# Use different styles based on flash type (e.g., notice, alert) %>
+      <div class="flash flash-<%= type %>">
+        <%= msg %>
+      </div>
+    <% end %>
+
     <%= yield %>
+
+    <%# Basic inline styles for flash messages %>
+    <style>
+      .flash { padding: 1em; margin-bottom: 1em; border: 1px solid; }
+      .flash-notice { color: green; border-color: green; background-color: #e6ffed; }
+      .flash-alert { color: red; border-color: red; background-color: #ffe6e6; }
+      /* Add styles for completed tasks later */
+    </style>
   </body>
 </html>

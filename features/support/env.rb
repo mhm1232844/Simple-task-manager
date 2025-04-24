@@ -7,24 +7,37 @@
 
 require 'cucumber/rails'
 
-     # features/support/env.rb
-        begin
-          require 'database_cleaner'
-          # If using ActiveRecord:
-          require 'database_cleaner/active_record'
-          require 'database_cleaner/cucumber'
+# --- DatabaseCleaner Configuration ---
 
-          # Recommended strategy for Cucumber features is truncation
-          DatabaseCleaner.strategy = :truncation
+# Require the necessary gems
+require 'database_cleaner/active_record' # Change line 13 to this
+require 'database_cleaner/cucumber' # Often needed for the Cucumber hooks
+# If using ActiveRecord:
+require 'database_cleaner/active_record'
 
-        rescue NameError
-          raise "You need to add database_cleaner-active_record to your Gemfile (in the :test group)..."
-        end
 
-        # Run database cleaning around each scenario
-        Around do |scenario, block|
-          DatabaseCleaner.cleaning(&block)
-        end
+# Configure DatabaseCleaner strategies
+# Recommended strategy for Cucumber features is truncation, especially with JS
+DatabaseCleaner.strategy = :truncation
+
+# You may also want to configure DatabaseCleaner to use different strategies for certain features and scenarios.
+# See the DatabaseCleaner documentation for details. The comments below from the original file might be helpful.
+#
+#   Before('@no-txn,@selenium,@culerity,@celerity,@javascript') do
+#     DatabaseCleaner.strategy = :truncation
+#   end
+#
+#   Before('not @no-txn', 'not @selenium', 'not @culerity', 'not @celerity', 'not @javascript') do
+#     DatabaseCleaner.strategy = :transaction
+#   end
+
+
+# Run database cleaning around each scenario
+Around do |scenario, block|
+  DatabaseCleaner.cleaning(&block)
+end
+
+# --- End DatabaseCleaner Configuration ---
 
 
 # By default, any exception happening in your Rails application will bubble up
@@ -45,27 +58,15 @@ require 'cucumber/rails'
 ActionController::Base.allow_rescue = false
 
 # Remove/comment out the lines below if your app doesn't have a database.
+# (This section about database is now handled by the DatabaseCleaner config above)
 # For some databases (like MongoDB and CouchDB) you may need to use :truncation instead.
-begin
-  DatabaseCleaner.strategy = :transaction
-rescue NameError
-  raise "You need to add database_cleaner to your Gemfile (in the :test group) if you wish to use it."
-end
+# The following block was the second DatabaseCleaner block - make sure it's removed.
+# begin
+#   DatabaseCleaner.strategy = :transaction
+# rescue NameError
+#   raise "You need to add database_cleaner to your Gemfile (in the :test group) if you wish to use it."
+# end
 
-# You may also want to configure DatabaseCleaner to use different strategies for certain features and scenarios.
-# See the DatabaseCleaner documentation for details. Example:
-#
-#   Before('@no-txn,@selenium,@culerity,@celerity,@javascript') do
-#     # { except: [:widgets] } may not do what you expect here
-#     # as Cucumber::Rails::Database.javascript_strategy overrides
-#     # this setting.
-#     DatabaseCleaner.strategy = :truncation
-#   end
-#
-#   Before('not @no-txn', 'not @selenium', 'not @culerity', 'not @celerity', 'not @javascript') do
-#     DatabaseCleaner.strategy = :transaction
-#   end
-#
 
 # Possible values are :truncation and :transaction
 # The :transaction strategy is faster, but might give you threading problems.

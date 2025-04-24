@@ -1,0 +1,40 @@
+<%# app/views/tasks/index.html.erb %>
+<h1>Tasks</h1>
+
+<%= link_to "New task", new_task_path, class: "button-new-task" %>
+
+<div id="tasks"> <%# Container for the list %>
+  <% if @tasks.any? %>
+    <% @tasks.each do |task| %>
+      <%# Use dom_id for unique element IDs, helpful for Turbo %>
+      <div class="task-item <%= task.completed? ? 'completed' : 'incomplete' %>" id="<%= dom_id task %>">
+        <p>
+          <strong><%= task.title %></strong>
+          <% if task.description.present? %>
+            <br><em><%= task.description %></em>
+          <% end %>
+          <% if task.due_date.present? %>
+            <br><small>Due: <%= task.due_date.strftime("%Y-%m-%d") %></small>
+          <% end %>
+          <br><small>Status: <span class="task-status"><%= task.status %></span></small>
+        </p>
+        <div class="task-actions">
+          <%# Links/buttons for Edit, Toggle, Delete will go here %>
+        </div>
+        <hr>
+      </div>
+    <% end %>
+  <% else %>
+    <p>No tasks yet!</p>
+  <% end %>
+</div>
+
+<%# Basic styling for task items %>
+<style>
+  .task-item { margin-bottom: 1em; padding: 0.5em; border-left: 5px solid #ccc; }
+  .task-item.completed { opacity: 0.6; border-left-color: green; }
+  .task-item.incomplete { border-left-color: orange; }
+  .task-item.completed strong { text-decoration: line-through; }
+  .task-actions { margin-top: 0.5em; }
+  .button-new-task { display: inline-block; margin-bottom: 1em; padding: 0.5em 1em; background-color: #007bff; color: white; text-decoration: none; border-radius: 4px; }
+</style>

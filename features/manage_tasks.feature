@@ -88,7 +88,44 @@
     And the "Task to Uncomplete" task item should not have class "completed"
 
 
+# ... (keep previous scenarios) ...
 
+  Scenario: Editing an existing task's details
+    Given a task exists with title "Initial Task", description "Old Desc", and completed status "false"
+    When I am on the tasks page
+    And I find the task "Initial Task" and click "Edit"
+ # Add Edit link
+    Then I should be on the edit task page for "Initial Task"
+ # Verify navigation
+    When I fill in "Title" with "Updated Task Title"
+    And I fill in "Description" with "This task has been updated."
+    And I check "Completed" 
+# Example: Also mark it as completed during edit
+    And I click "Update Task"
+ # Button text from the form
+    Then I should be on the tasks page
+    And I should see "Task was successfully updated." 
+# Flash notice
+    And I should see "Updated Task Title"
+    And I should see "This task has been updated."
+    And I should not see "Initial Task" 
+# Old title should be gone
+    And I should see "Status: Complete" within the "Updated Task Title" task item
+    And the "Updated Task Title" task item should have class "completed"
+
+  Scenario: Editing a task with invalid data (e.g., blank title)
+    Given a task exists with title "Editable Task"
+    When I am on the tasks page
+    And I find the task "Editable Task" and click "Edit"
+    Then I should be on the edit task page for "Editable Task"
+    When I fill in "Title" with "" 
+# Make title blank (invalid)
+    And I click "Update Task"
+    Then I should see "Title can't be blank" 
+# Validation error
+    And I should still be on the edit task page for "Editable Task"
+ # Re-rendered form
+    And I should not see "Task was successfully updated."
 
 
 

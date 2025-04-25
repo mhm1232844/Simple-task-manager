@@ -27,9 +27,8 @@
     <%= form.date_field :due_date %>
   </div>
 
-  <%# Don't usually show 'completed' checkbox on create, it defaults to false %>
-  <%# If needed for edit later: %>
-  <% if form.object.persisted? %> <%# Only show if editing an existing task %>
+  <%# Only show 'completed' checkbox if the task object is persisted (i.e., we are editing) %>
+  <% if form.object.persisted? %>
     <div class="field">
       <%= form.check_box :completed %>
       <%= form.label :completed %>
@@ -37,7 +36,7 @@
   <% end %>
 
   <div class="actions">
-    <%# Button text changes for new vs edit automatically %>
+    <%# Button text changes for new vs edit automatically based on form.object.persisted? %>
     <%= form.submit %>
   </div>
 <% end %>

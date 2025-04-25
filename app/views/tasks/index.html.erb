@@ -8,6 +8,8 @@
     <% @tasks.each do |task| %>
       <%# Use dom_id for unique element IDs, helpful for Turbo %>
       <div class="task-item <%= task.completed? ? 'completed' : 'incomplete' %>" id="<%= dom_id task %>">
+
+        <%# ---- Task Details ---- %>
         <p>
           <strong><%= task.title %></strong>
           <% if task.description.present? %>
@@ -18,17 +20,20 @@
           <% end %>
           <br><small>Status: <span class="task-status"><%= task.status %></span></small>
         </p>
+        <%# ---- End Task Details ---- %>
+
+        <%# ---- Task Actions (KEEP ONLY THIS BLOCK)---- %>
         <div class="task-actions">
-          <%# Links/buttons for Edit, Toggle, Delete will go here %>
-          <%# Link to edit page (implement later) %>
-          <%# <%= link_to "Edit", edit_task_path(task) %> %>
+          <%# Edit Link %>
+          <%= link_to "Edit", edit_task_path(task) %> |
 
-          <%# Button to toggle status (PATCH request) %>
-          <%= button_to "Toggle Status", toggle_complete_task_path(task), method: :patch %>
+          <%# Toggle Status Button %>
+          <%= button_to "Toggle Status", toggle_complete_task_path(task), method: :patch %> |
 
-          <%# Button to delete (implement later) %>
+          <%# Delete Button (Placeholder - uncomment when ready) %>
           <%# <%= button_to "Delete", task, method: :delete, data: { turbo_confirm: 'Are you sure?' } %> %>
         </div>
+        <%# ---- END Task Actions Block ---- %>
         <hr>
       </div> <%# End of task-item div %>
     <% end %> <%# End of @tasks.each loop %>
@@ -45,5 +50,6 @@
   .task-item.completed strong { text-decoration: line-through; }
   .task-actions { margin-top: 0.5em; }
   .task-actions form { display: inline; margin-right: 5px;} /* Style button_to forms */
+  .task-actions a { margin-right: 5px; } /* Add margin to links too */
   .button-new-task { display: inline-block; margin-bottom: 1em; padding: 0.5em 1em; background-color: #007bff; color: white; text-decoration: none; border-radius: 4px; }
 </style>

@@ -16,9 +16,53 @@ Given("the following tasks exist:") do |table|
   end
 end
 
+# --- ADDED THE MISSING STEP DEFINITION HERE ---
+Given('a task exists with title {string}') do |title|
+  # Use FactoryBot to create a simple task with just the given title
+  FactoryBot.create(:task, title: title)
+end
+# ------------------------------------------
+
+Given("a task exists with title {string} and completed status {string}") do |title, completed_status|
+  FactoryBot.create(:task, title: title, completed: (completed_status == 'true'))
+end
+
+Given("a task exists with title {string}, description {string}, and completed status {string}") do |title, description, completed_status|
+  FactoryBot.create(:task, title: title, description: description, completed: (completed_status == 'true'))
+end
+
+
 When("I visit the tasks page") do
   visit tasks_path
 end
+
+When("I click {string}") do |link_or_button_text|
+  click_on link_or_button_text
+end
+
+When("I fill in {string} with {string}") do |field_label, value|
+  # Capybara's fill_in works with label text, id, or name
+  fill_in field_label, with: value
+end
+
+# Step to find task by title within its item and click something
+When("I find the task {string} and click {string}") do |task_title, link_or_button_text|
+  # Scope the click action within the specific task's div
+  task_div = find('.task-item', text: /#{Regexp.escape(task_title)}/)
+  within(task_div) do
+    # save_and_open_page # Uncomment temporarily for debugging HTML if needed
+    click_on link_or_button_text
+  end
+end
+
+When("I check {string}") do |label|
+  check(label)
+end
+
+When("I uncheck {string}") do |label|
+  uncheck(label)
+end
+
 
 Then("I should see {string}") do |content|
   expect(page).to have_content(content)
@@ -56,19 +100,6 @@ Then("the {string} task item should not have class {string}") do |task_title, cs
    expect(task_div[:class]).not_to include(css_class)
 end
 
-
-# features/step_definitions/task_steps.rb
-# ... (keep previous steps) ...
-
-When("I click {string}") do |link_or_button_text|
-  click_on link_or_button_text
-end
-
-When("I fill in {string} with {string}") do |field_label, value|
-  # Capybara's fill_in works with label text, id, or name
-  fill_in field_label, with: value
-end
-
 Then("I should be on the tasks page") do
   expect(current_path).to eq(tasks_path)
 end
@@ -76,8 +107,6 @@ end
 Then("I should be on the new task page") do
   # Check for a unique element on the new task page, like the H1 title or form ID
   expect(page).to have_selector("h1", text: "New task")
-  # Or check the URL path (less reliable if POST fails and renders :new on /tasks)
-  # expect(current_path).to eq(new_task_path)
 end
 
 # Can refine the check for form re-render vs redirect
@@ -88,29 +117,14 @@ Then("I should see {string} error message") do |error_message|
      expect(page).to have_content(error_message)
    end
    # Or a simpler check if the structure is consistent
-   expect(page).to have_content(error_message)
+   # expect(page).to have_content(error_message)
 end
 
-# features/step_definitions/task_steps.rb
-# ... (keep previous steps) ...
-
-Given("a task exists with title {string} and completed status {string}") do |title, completed_status|
-  FactoryBot.create(:task, title: title, completed: (completed_status == 'true'))
+Then("I should be on the edit task page for {string}") do |task_title|
+  expect(page).to have_selector("h1", text: "Editing task")
+  expect(page).to have_field("Title", with: task_title)
 end
 
-# Step to find task by title within its item and click something
-When("I find the task {string} and click {string}") do |task_title, link_or_button_text|
-  # Scope the click action within the specific task's div
-  task_div = find('.task-item', text: /#{Regexp.escape(task_title)}/)
-  within(task_div) do
-    click_on link_or_button_text
-  end
-end
-
-
-
-
-
-
-
-
+ Then("I should still be on the edit task page for {string}") do |task_title|
+  expect(page).to have_selector("h1", text: "Editing task")
+ end

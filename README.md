@@ -24,7 +24,6 @@
 *   Version Control: Git / GitHub
 *   Web Server: Puma
 *   Frontend: Importmap-rails, Turbo-rails, Stimulus-rails (default Rails 7+)
-*   Deployment (Optional): Heroku
 
 **Features Implemented:**
 *   Full Task CRUD (Create, Read, Update, Delete) operations.

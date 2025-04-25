@@ -127,6 +127,16 @@
  # Re-rendered form
     And I should not see "Task was successfully updated."
 
+Scenario: Deleting an existing task
+    Given a task exists with title "Task to Delete"
+    When I am on the tasks page
+    And I find the task "Task to Delete" and click "Delete"
+    # Capybara handles basic confirmation dialogs automatically
+    Then I should be on the tasks page
+    And I should see "Task was successfully destroyed." 
+# Flash notice
+    And I should not see "Task to Delete" 
+# The task item should be gone
 
 
 

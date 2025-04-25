@@ -22,16 +22,11 @@
         </p>
         <%# ---- End Task Details ---- %>
 
-        <%# ---- Task Actions (KEEP ONLY THIS BLOCK)---- %>
+        <%# ---- Task Actions ---- %>
         <div class="task-actions">
-          <%# Edit Link %>
           <%= link_to "Edit", edit_task_path(task) %> |
-
-          <%# Toggle Status Button %>
           <%= button_to "Toggle Status", toggle_complete_task_path(task), method: :patch %> |
-
-          <%# Delete Button (Placeholder - uncomment when ready) %>
-          <%# <%= button_to "Delete", task, method: :delete, data: { turbo_confirm: 'Are you sure?' } %> %>
+          <%= button_to "Delete", task, method: :delete, data: { turbo_confirm: 'Are you sure?' } %>
         </div>
         <%# ---- END Task Actions Block ---- %>
         <hr>

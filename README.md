@@ -38,7 +38,7 @@
 *   Graceful handling of `RecordNotFound` errors (redirect with alert).
 
 **Agile Practices / Scrum Artifacts:**
-*   User stories tracked as GitHub Issues: [[Link to your GitHub Issues page](https://github.com/mhm1232844/Simple-task-manager/issues)]
+*   User stories tracked as GitHub Issues: [[GitHub Issues page](https://github.com/mhm1232844/Simple-task-manager/issues)]
 *   Development followed TDD/BDD cycles for each feature (Cucumber -> RSpec -> Implementation).
 *   Commit messages reference corresponding issues (e.g., `(closes Issue 4)`).
 

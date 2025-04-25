@@ -78,7 +78,7 @@ group :development, :test do
   gem 'faker'
 
   # Concise RSpec matchers for common Rails tests (validations, associations)
-  gem 'shoulda-matchers', '~> 5.0'
+  gem 'shoulda-matchers', '~> 6.4'
 
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
   # Run manually via `brakeman`

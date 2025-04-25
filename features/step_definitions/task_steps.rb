@@ -16,12 +16,10 @@ Given("the following tasks exist:") do |table|
   end
 end
 
-# --- ADDED THE MISSING STEP DEFINITION HERE ---
 Given('a task exists with title {string}') do |title|
   # Use FactoryBot to create a simple task with just the given title
   FactoryBot.create(:task, title: title)
 end
-# ------------------------------------------
 
 Given("a task exists with title {string} and completed status {string}") do |title, completed_status|
   FactoryBot.create(:task, title: title, completed: (completed_status == 'true'))

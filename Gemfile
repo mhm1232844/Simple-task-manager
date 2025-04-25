@@ -66,7 +66,7 @@ group :development, :test do
 
   # Core RSpec testing framework for Rails
   # Needed in dev for generators, test for running specs
-  gem 'rspec-rails', '~> 6.0' # Or latest appropriate version
+  gem 'rspec-rails', '~> 7.1' # Or latest appropriate version
 
   # Provides matchers like render_template, assigns (needed due to RSpec error)
   gem 'rails-controller-testing' # <--- ADDED THIS LINE

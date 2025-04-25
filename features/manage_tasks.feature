@@ -29,8 +29,7 @@
 
       # --- Add other scenarios for Add/Edit/Delete later ---
 
-# features/manage_tasks.feature
-# ... (keep previous feature/background/scenarios) ...
+
 
   Scenario: Adding a valid new task
     When I click "New task"
@@ -62,9 +61,6 @@
  # No success flash
 
 
-# features/manage_tasks.feature
-# ... (keep previous scenarios) ...
-
   Scenario: Marking an incomplete task as complete
     Given a task exists with title "Task to Complete" and completed status "false"
     When I am on the tasks page 
@@ -88,7 +84,6 @@
     And the "Task to Uncomplete" task item should not have class "completed"
 
 
-# ... (keep previous scenarios) ...
 
   Scenario: Editing an existing task's details
     Given a task exists with title "Initial Task", description "Old Desc", and completed status "false"

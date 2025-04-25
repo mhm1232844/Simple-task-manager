@@ -10,15 +10,15 @@
 *   Delete tasks with a confirmation prompt.
 
 **Technology Stack:**
-*   Ruby on Rails `[e.g., 7.0.8]`
-*   Ruby `[e.g., 3.2.2]`
-*   Database: PostgreSQL (Production/Heroku), SQLite (Development/Test)
+*   Ruby on Rails `[Rails 7.2.2.1]`
+*   Ruby `[ruby 3.4.3]`
+*   Database: PostgreSQL,SQLite (Development/Test)
 *   Testing:
-    *   RSpec / RSpec-Rails (`~> 6.x`) - Unit/Integration Tests
+    *   RSpec / RSpec-Rails (`6.0`) - Unit/Integration Tests
     *   Cucumber / Cucumber-Rails - Acceptance Tests (BDD)
     *   Capybara / Selenium WebDriver - Browser simulation for Cucumber
     *   FactoryBot / Faker - Test Data Generation
-    *   Shoulda Matchers (`~> 5.x`) - Concise RSpec matchers
+    *   Shoulda Matchers (`5.0`) - Concise RSpec matchers
     *   Database Cleaner - Test database state management
     *   Rails Controller Testing - For `render_template` matchers
 *   Version Control: Git / GitHub
@@ -39,13 +39,12 @@
 *   Graceful handling of `RecordNotFound` errors (redirect with alert).
 
 **Agile Practices / Scrum Artifacts:**
-*   User stories tracked as GitHub Issues: [Link to your GitHub Issues page]
-*   (Optional) GitHub Project Board: [Link to your GitHub Project board, if used]
+*   User stories tracked as GitHub Issues: [[Link to your GitHub Issues page](https://github.com/mhm1232844/Simple-task-manager/issues)]
 *   Development followed TDD/BDD cycles for each feature (Cucumber -> RSpec -> Implementation).
-*   Commit messages reference corresponding issues (e.g., `(closes #X)`).
+*   Commit messages reference corresponding issues (e.g., `(closes Issue 4)`).
 
 **Setup Instructions:**
-1.  Clone the repository: `git clone <your-repo-url>`
+1.  Clone the repository: `git clone (https://github.com/mhm1232844/Simple-task-manager)`
 2.  Navigate to the directory: `cd simple-task-manager`
 3.  Install dependencies: `bundle install`
 4.  Setup the database: `rails db:setup` (This runs `db:create`, `db:schema:load`, `db:seed` if seeds exist)
@@ -58,9 +57,6 @@
 *   **RSpec (Unit/Integration):** Run `bundle exec rspec`. covers model validations /methods and request specs for controller actions located in 'spec/'
 *   **Cucumber (Acceptance):** Run `bundle exec cucumber`. Features cover main user flows (viewing, adding, editing, toggling status, deleting tasks) from a user's perspective. Located in `features/`.
 *   **Run all tests:** You might configure a default `rake` task or run them sequentially: `bundle exec rspec && bundle exec cucumber`.
-
-**Deployment:**
-Soon
 
 **Author:**
 *  mhm1232844

@@ -110,7 +110,7 @@ group :test do
 end
 
 
-# --- Development Environment Only Gems ---
+
 # Gems ONLY needed during development
 group :development do
   # Interactive console in browser on error pages
@@ -124,5 +124,3 @@ group :development do
   # If using PG in development environment INSTEAD of Sqlite:
   # gem 'pg', '~> 1.1'
 end
-
-# You can add other groups like :staging etc. if needed
